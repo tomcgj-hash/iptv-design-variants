@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Direction D · Studio + Model finder — IPTV headend equipment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1d1d1f; --ink2:#6e6e73; --ink3:#86868b; --line:#e8e8ed; --soft:#f5f5f7;
+  --blue:#0071e3; --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;line-height:1.5;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+.wide{max-width:1320px;margin:0 auto;padding:0 24px}
+.kicker{font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
+h1{font-size:clamp(40px,6.6vw,84px);font-weight:600;letter-spacing:-.045em;line-height:1.02}
+h2{font-size:clamp(30px,4.2vw,54px);font-weight:600;letter-spacing:-.035em;line-height:1.07}
+h3{font-size:22px;font-weight:600;letter-spacing:-.015em}
+.lead{font-size:21px;color:var(--ink2);line-height:1.5}
+.center{text-align:center}
+@media(max-width:760px){.lead{font-size:18.5px}}
+
+/* nav */
+header.site{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.82);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(0,0,0,.06)}
+.nav{max-width:1320px;margin:0 auto;padding:0 24px;height:56px;display:flex;align-items:center;gap:24px;font-size:13.5px}
+.nav .brand{display:flex;align-items:center;gap:8px;font-weight:600;font-size:16px;letter-spacing:-.01em}
+.nav .mk{width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,#0071e3,#4aa8ff);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.nav .links{display:flex;gap:22px;color:var(--ink2)}
+.nav .links a:hover{color:var(--ink)}
+.nav-search{margin-left:auto;display:flex;align-items:center;gap:8px;background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:7px 14px;width:230px}
+.nav-search input{border:0;background:transparent;outline:none;font-size:13.5px;width:100%}
+.nav-search i{color:var(--ink3);font-style:normal;font-size:13px}
+.nav .pill{background:var(--ink);color:#fff;padding:8px 16px;border-radius:999px;font-weight:500}
+@media(max-width:1080px){.nav .links{display:none}}
+@media(max-width:700px){.nav-search{display:none}}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;font-size:16px;font-weight:500;padding:13px 27px;border-radius:999px;transition:.25s}
+.btn-dark{background:var(--ink);color:#fff}
+.btn-dark:hover{transform:translateY(-1px);box-shadow:0 12px 28px rgba(0,0,0,.2)}
+.btn-blue{background:var(--blue);color:#fff}
+.btn-blue:hover{background:#0077ed}
+.btn-ghost{border:1px solid #d2d2d7}
+.btn-ghost:hover{border-color:var(--ink)}
+
+/* hero */
+.hero{padding:92px 0 0;text-align:center}
+.hero h1{margin:20px auto 22px;max-width:17ch}
+.hero .lead{max-width:46ch;margin:0 auto}
+.hero .btns{display:flex;gap:14px;justify-content:center;margin-top:34px;flex-wrap:wrap}
+.hero .stage{margin-top:60px;background:var(--soft);border-radius:34px;padding:44px 24px;position:relative;overflow:hidden}
+.hero .stage img{max-height:450px;margin:0 auto;object-fit:contain;transition:transform .5s cubic-bezier(.2,.7,.3,1)}
+.hero .stage:hover img{transform:scale(1.02)}
+.hero .stage .note{position:absolute;top:22px;left:50%;transform:translateX(-50%);font-size:12.5px;color:var(--ink3)}
+.hero .stage .cap{margin-top:24px;font-size:15px;color:var(--ink2)}
+.hero .stage .cap b{color:var(--ink)}
+@media(max-width:700px){.hero{padding-top:62px}.hero .stage{padding:26px 14px}.hero .stage img{max-height:270px}}
+
+.trust{padding:26px 0;border-bottom:1px solid var(--line);margin-top:66px}
+.trust .wide{display:flex;justify-content:center;gap:14px 40px;flex-wrap:wrap;font-size:13.5px;color:var(--ink3)}
+.trust b{color:var(--ink)}
+
+section.pad{padding:104px 0}
+section.pad.sm{padding:74px 0}
+
+/* narrative rows */
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.row2 + .row2{margin-top:104px}
+.row2 .shot{background:var(--soft);border-radius:28px;padding:34px;display:flex;align-items:center;justify-content:center;height:392px}
+.row2 .shot img{max-height:100%;object-fit:contain}
+.row2 h2{margin:16px 0 18px;max-width:16ch}
+.row2 .lead{font-size:18.5px}
+.row2 .lnk{display:inline-flex;gap:8px;color:var(--blue);font-weight:500;margin-top:22px;font-size:16px}
+.row2.flip .txt{order:2}
+@media(max-width:900px){.row2{grid-template-columns:1fr;gap:32px}.row2.flip .txt{order:0}.row2 .shot{height:260px}}
+
+/* ---------- MODEL FINDER (from direction C) ---------- */
+.finder-sec{background:var(--soft);border-radius:40px;margin:0 12px;padding:82px 0 88px}
+.finder{max-width:1180px;margin:34px auto 0;padding:0 24px}
+.fpanel{background:#fff;border:1px solid var(--line);border-radius:28px;padding:26px 26px 20px;box-shadow:0 18px 44px rgba(0,0,0,.05)}
+.frow2{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+.fsearch{flex:1;min-width:240px;display:flex;align-items:center;gap:10px;background:var(--soft);border:1px solid #dcdce1;border-radius:14px;padding:12px 16px}
+.fsearch input{border:0;outline:none;font-size:15.5px;width:100%;background:transparent}
+.fsearch i{color:var(--ink3);font-style:normal}
+.fcount{font-size:13.5px;color:var(--ink3);white-space:nowrap}
+.cats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.cbtn{border:1px solid #dcdce1;background:#fff;border-radius:999px;padding:7px 14px;font-size:13.5px;color:var(--ink2);transition:.2s}
+.cbtn:hover{border-color:var(--ink)}
+.cbtn.on{background:var(--ink);border-color:var(--ink);color:#fff;font-weight:500}
+.cbtn i{font-style:normal;opacity:.55;margin-left:5px;font-size:12.5px}
+.list{border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.row{display:grid;grid-template-columns:1.4fr 170px 1.25fr 84px;gap:14px;align-items:center;padding:13px 18px;border-top:1px solid var(--line);font-size:14.5px}
+.row:first-child{border-top:0}
+.row.head{background:#fafafb;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);padding:11px 18px}
+.row:hover:not(.head){background:#fbfbfd}
+.row b{font-weight:500;letter-spacing:-.005em}
+.row .cm{font-size:13px;color:var(--ink3)}
+.row .sp{font-family:var(--mono);font-size:12px;color:var(--ink3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .go{color:var(--blue);font-size:13.5px;text-align:right;white-space:nowrap}
+.empty{padding:34px;text-align:center;color:var(--ink3);font-size:14.5px}
+.more-row{padding:13px 18px;border-top:1px solid var(--line);font-size:13.5px;color:var(--ink3);display:flex;justify-content:space-between}
+.more-row a{color:var(--blue)}
+@media(max-width:880px){.row{grid-template-columns:1fr 84px}.row .cm,.row .sp,.row.head span:nth-child(2),.row.head span:nth-child(3){display:none}}
+@media(max-width:640px){.finder-sec{margin:0;border-radius:0}.fpanel{padding:18px 14px 14px;border-radius:20px}}
+
+/* numbers */
+.bignums{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;text-align:center}
+.bignums b{display:block;font-size:clamp(38px,4.6vw,58px);font-weight:600;letter-spacing:-.04em;line-height:1}
+.bignums span{font-size:14.5px;color:var(--ink3);display:block;margin-top:12px}
+@media(max-width:800px){.bignums{grid-template-columns:repeat(2,1fr);gap:34px}}
+
+/* dark band */
+.dark{background:#1d1d1f;color:#fff;padding:104px 0}
+.dark h2{color:#fff}
+.dark p{color:rgba(255,255,255,.72);font-size:18.5px}
+.dark .row2 .shot{background:rgba(255,255,255,.06)}
+.dark .kicker{color:rgba(255,255,255,.5)}
+.dark .lnk{color:#5ac8fa}
+
+/* guides */
+.guides{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.g img{width:100%;height:200px;object-fit:cover;border-radius:20px}
+.g b{display:block;font-size:19px;font-weight:600;letter-spacing:-.015em;margin:18px 0 8px;line-height:1.3}
+.g p{font-size:14px;color:var(--ink3)}
+.g:hover b{color:var(--blue)}
+@media(max-width:900px){.guides{grid-template-columns:1fr}}
+
+/* outro */
+.outro{padding:116px 0 126px;text-align:center}
+.outro h2{font-size:clamp(36px,5.4vw,72px);max-width:20ch;margin:0 auto 26px}
+.outro .meta{display:flex;gap:28px;justify-content:center;flex-wrap:wrap;margin-top:40px;font-size:14.5px;color:var(--ink3)}
+
+footer.site{border-top:1px solid var(--line);padding:44px 0 40px;font-size:13.5px;color:var(--ink3)}
+footer.site .grid{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:center}
+footer.site a:hover{color:var(--ink)}
+footer.site .fl{display:flex;gap:22px;flex-wrap:wrap}
+
+html.rr .rv{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.3,1)}
+html.rr .rv.in{opacity:1;transform:none}
+.vbadge{position:fixed;right:16px;bottom:16px;z-index:99;background:rgba(29,29,31,.9);color:#fff;font-size:12.5px;padding:9px 15px;border-radius:999px;backdrop-filter:blur(8px)}
+.vbadge a{color:#5ac8fa}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="nav">
+    <a class="brand" href="#"><span class="mk">F</span>FMUSER</a>
+    <nav class="links"><a href="#">Products</a><a href="#">Solutions</a><a href="#">Factory</a><a href="#">Guides</a><a href="#">Contact</a></nav>
+    <label class="nav-search"><i>⌕</i><input id="navQ" type="search" placeholder="Search 191 models"></label>
+    <a class="pill" href="#">Get a quote</a>
+  </div>
+</header>
+
+<!-- HERO — B's centred studio opening -->
+<section class="hero">
+  <div class="wrap">
+    <p class="kicker">Digital TV headend · Built in our own factory</p>
+    <h1>Every part of the chain.</h1>
+    <p class="lead">Encoders, modulators, IP gateways, multiplexers, transmitters. One supplier, one factory line, 191 models.</p>
+    <div class="btns">
+      <a class="btn btn-dark" href="#finder">Browse products</a>
+      <a class="btn btn-ghost" href="#">Request a quote</a>
+    </div>
+  </div>
+  <div class="wide">
+    <div class="stage rv">
+      <span class="note">FMUSER headend series</span>
+      <img src="../img/cat-encoder.jpg" alt="Headend equipment">
+      <div class="cap"><b>48× HDMI network encoder</b> — HEVC/H.265, multi-protocol IP output</div>
+    </div>
+  </div>
+</section>
+
+<div class="trust">
+  <div class="wide">
+    <span><b>ISO 9001:2015</b> certified</span>
+    <span>CE · RoHS · FCC</span>
+    <span><b>24-hour</b> burn-in on every unit</span>
+    <span><b>50+</b> countries served</span>
+    <span><b>12-month</b> warranty</span>
+  </div>
+</div>
+
+<!-- NARRATIVE CHAPTERS -->
+<section class="pad">
+  <div class="wrap">
+    <div class="row2 rv">
+      <div class="shot"><img src="../img/cat-encoder.jpg" alt="Encoder"></div>
+      <div class="txt">
+        <p class="kicker">Encoding</p>
+        <h2>From one HDMI to forty-eight.</h2>
+        <p class="lead">Broadcast-grade HEVC, H.264 and MPEG-2 encoding with UDP/RTP/RTSP output. Rack units built for 24/7 headend duty, not for a demo shelf.</p>
+        <a class="lnk" href="#">See encoders →</a>
+      </div>
+    </div>
+    <div class="row2 flip rv">
+      <div class="shot"><img src="../img/cat-modulator.jpg" alt="Modulator"></div>
+      <div class="txt">
+        <p class="kicker">Modulation</p>
+        <h2>Whatever standard your market uses.</h2>
+        <p class="lead">QAM, ATSC, DVB-T, ISDB-T, DVB-S2 and IP output — 1 to 64 channels, aligned and tested on our own RF bench before it leaves the building.</p>
+        <a class="lnk" href="#">See modulators →</a>
+      </div>
+    </div>
+    <div class="row2 rv">
+      <div class="shot"><img src="../img/cat-ipgw.jpg" alt="IP gateway"></div>
+      <div class="txt">
+        <p class="kicker">Distribution</p>
+        <h2>Satellite in, IP out, to every screen.</h2>
+        <p class="lead">IPTV gateway servers for hotels, hospitals, campuses and ISPs — with VOD, multi-language EPG and remote management.</p>
+        <a class="lnk" href="#">See IP gateways →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODEL FINDER (C's search section, inside B's centred rhythm) -->
+<section class="finder-sec" id="finder">
+  <div class="wrap center rv">
+    <p class="kicker">Model finder</p>
+    <h2 style="margin:16px 0 12px">Search the catalogue.</h2>
+    <p class="lead" style="max-width:48ch;margin:0 auto">Type a model prefix or a keyword — <span class="mono">FUQ4339</span>, <span class="mono">8 HDMI</span>, <span class="mono">QAM</span> — then narrow it down by category.</p>
+  </div>
+  <div class="finder">
+    <div class="fpanel rv">
+      <div class="frow2">
+        <label class="fsearch"><i>⌕</i><input id="q" type="search" placeholder="Search 191 models by name, type or spec…"></label>
+        <span class="fcount" id="count">Loading catalogue…</span>
+      </div>
+      <div class="cats" id="cats"></div>
+      <div class="list">
+        <div class="row head"><span>Model</span><span>Category</span><span>Key specification</span><span></span></div>
+        <div id="rows"><div class="empty">Loading…</div></div>
+      </div>
+      <div class="more-row" id="moreRow" style="display:none"></div>
+    </div>
+  </div>
+</section>
+
+<!-- NUMBERS -->
+<section class="pad">
+  <div class="wide rv">
+    <div class="bignums">
+      <div><b data-count="191">191</b><span>Models in catalogue</span></div>
+      <div><b data-count="9">9</b><span>Equipment categories</span></div>
+      <div><b data-count="50" data-suffix="+">50+</b><span>Export markets</span></div>
+      <div><b data-count="24" data-suffix="h">24h</b><span>Burn-in per unit</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- DARK BAND -->
+<section class="dark">
+  <div class="wrap">
+    <div class="row2 rv">
+      <div>
+        <p class="kicker">The factory</p>
+        <h2 style="margin:16px 0 18px">We build what we ship.</h2>
+        <p>SMT assembly, firmware, RF alignment and a 24-hour burn-in run happen on one site in Guangzhou. Nothing is rebadged — the unit you receive is the unit we measured.</p>
+        <a class="lnk" style="display:inline-flex;gap:8px;font-weight:500;margin-top:24px;font-size:16px" href="#">Inside the factory →</a>
+      </div>
+      <div class="shot"><img src="../img/factory.jpg" alt="Production floor"></div>
+    </div>
+  </div>
+</section>
+
+<!-- GUIDES -->
+<section class="pad">
+  <div class="wrap">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:44px" class="rv">
+      <div><p class="kicker">Guides</p><h2 style="margin-top:14px">Before you buy.</h2></div>
+      <a href="#" style="color:var(--blue);font-size:15px;font-weight:500">All articles →</a>
+    </div>
+    <div class="guides">
+      <a class="g rv" href="#"><img src="../img/channels.jpg" alt=""><b>Designing a hotel IPTV headend</b><p>Encoder, gateway or set-top box — what decides the architecture</p></a>
+      <a class="g rv" href="#"><img src="../img/pcb.jpg" alt=""><b>FM transmitters: 50 W vs 5 kW</b><p>Coverage, licensing and cost per watt</p></a>
+      <a class="g rv" href="#"><img src="../img/qa.jpg" alt=""><b>Choosing a modulation standard</b><p>DVB-T, ATSC or ISDB-T for your market</p></a>
+    </div>
+  </div>
+</section>
+
+<!-- OUTRO -->
+<section class="outro">
+  <div class="wrap">
+    <h2>Tell us your channel plan.</h2>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+      <a class="btn btn-blue" href="#">Request a quotation</a>
+      <a class="btn btn-ghost" href="#">Talk to an engineer</a>
+    </div>
+    <div class="meta">
+      <span>✉ sales@yourbrand.com</span><span>☎ +86 139 0000 0000</span><span>◷ Mon–Sat, 9:00–18:00 GMT+8</span>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap grid">
+    <span>© 2026 Your company name</span>
+    <span class="fl"><a href="#">Products</a><a href="#">Factory</a><a href="#">Guides</a><a href="#">Contact</a><a href="#">Privacy</a></span>
+  </div>
+</footer>
+
+<div class="vbadge">Direction D · Studio + finder — <a href="../">back to all</a></div>
+
+<script>
+// ---------- reveal / count-up (guarded: content stays visible without JS) ----------
+if(window.IntersectionObserver){
+  document.documentElement.classList.add('rr');
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.06});
+  document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
+  document.querySelectorAll('[data-count]').forEach(function(el){
+    var t=+el.getAttribute('data-count'), sfx=el.getAttribute('data-suffix')||'', done=false;
+    new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting&&!done){done=true;
+      var t0=performance.now();
+      (function tick(n){var p=Math.min(1,(n-t0)/900),e2=1-Math.pow(1-p,3);
+        el.textContent=Math.round(t*e2)+sfx; if(p<1)requestAnimationFrame(tick);})(t0);
+    }});},{threshold:.4}).observe(el);
+  });
+}
+
+// ---------- model finder ----------
+var MODELS=[], CATS=[
+  ['modulator','Modulators',45],['encoder','Encoders',28],['encoder-modulator','Encoder modulators',26],
+  ['other','Other devices',21],['ird-decoder','IRD & decoders',21],['ip-gateway','IP gateways',20],
+  ['multiplexer','Multiplexers',16],['transmitter','Transmitters',10],['software','Software & systems',4]];
+var NAME={}; CATS.forEach(function(c){NAME[c[0]]=c[1];});
+var active='all', shown=12;
+
+function render(){
+  var q=(document.getElementById('q').value||'').trim().toLowerCase();
+  var out=MODELS.filter(function(m){
+    if(active!=='all' && m.c!==active) return false;
+    if(!q) return true;
+    return (m.n+' '+m.c+' '+m.s).toLowerCase().indexOf(q)>-1;
+  });
+  document.getElementById('count').textContent='Showing '+out.length+' of '+MODELS.length;
+  document.getElementById('rows').innerHTML = out.length ? out.slice(0,shown).map(function(m){
+    return '<a class="row" href="#"><b>'+m.n+'</b><span class="cm">'+(NAME[m.c]||m.c)+'</span><span class="sp">'+(m.s||'—')+'</span><span class="go">Specs →</span></a>';
+  }).join('') : '<div class="empty">No model matches that search.</div>';
+  var mr=document.getElementById('moreRow');
+  if(out.length>shown){
+    mr.style.display='flex';
+    mr.innerHTML='<span>Showing first '+shown+' of '+out.length+'</span><a href="#" id="showAll">Show all →</a>';
+    document.getElementById('showAll').onclick=function(e){e.preventDefault(); shown=out.length; render();};
+  } else { mr.style.display='none'; }
+}
+var cbox=document.getElementById('cats');
+cbox.innerHTML='<button class="cbtn on" data-c="all">All <i>191</i></button>'+CATS.map(function(c){
+  return '<button class="cbtn" data-c="'+c[0]+'">'+c[1]+' <i>'+c[2]+'</i></button>';}).join('');
+cbox.addEventListener('click',function(e){var b=e.target.closest('.cbtn'); if(!b)return;
+  cbox.querySelectorAll('.cbtn').forEach(function(x){x.classList.remove('on');});
+  b.classList.add('on'); active=b.getAttribute('data-c'); shown=12; render();});
+document.getElementById('q').addEventListener('input',function(){shown=12; render();});
+document.getElementById('navQ').addEventListener('input',function(e){
+  document.getElementById('q').value=e.target.value; shown=12; render();
+});
+fetch('./models.json').then(function(r){return r.json();}).then(function(d){MODELS=d; render();})
+ .catch(function(){
+   MODELS=[{n:'FUQ4339KN V2 Network Encoder 48 HDMI',c:'encoder',s:'Resolution: up to 1080p30'},
+           {n:'FUQ4339RN IP Streaming Encoder 24 HDMI',c:'encoder',s:'8/16/24 HDMI inputs'},
+           {n:'FUQ4654E Encoder Modulator Multi-input',c:'encoder-modulator',s:'HEVC/H.265; H.264'}];
+   document.getElementById('count').textContent='offline sample — 3 of 191'; render();
+ });
+</script>
+</body>
+</html>
