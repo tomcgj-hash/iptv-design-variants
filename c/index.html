@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Direction C · Console — IPTV headend equipment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1d1d1f; --ink2:#6e6e73; --ink3:#86868b; --line:#e8e8ed; --soft:#f5f5f7;
+  --blue:#0071e3; --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;line-height:1.5;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.kicker{font-size:12.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--ink3)}
+h1{font-size:clamp(34px,4.6vw,60px);font-weight:600;letter-spacing:-.035em;line-height:1.05}
+h2{font-size:clamp(26px,3.1vw,40px);font-weight:600;letter-spacing:-.03em;line-height:1.12}
+h3{font-size:18px;font-weight:600}
+.lead{font-size:18.5px;color:var(--ink2);line-height:1.55}
+
+/* header */
+header.site{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.88);backdrop-filter:saturate(180%) blur(18px);border-bottom:1px solid var(--line)}
+.nav{max-width:1180px;margin:0 auto;padding:0 24px;height:60px;display:flex;align-items:center;gap:22px}
+.brand{display:flex;align-items:center;gap:9px;font-weight:600;font-size:17px;letter-spacing:-.01em}
+.brand .mk{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,#0071e3,#4aa8ff);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
+.links{display:flex;gap:22px;font-size:14px;color:var(--ink2)}
+.links a:hover{color:var(--ink)}
+.nav-search{margin-left:auto;display:flex;align-items:center;gap:8px;background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:7px 14px;width:250px}
+.nav-search input{border:0;background:transparent;outline:none;font-size:14px;width:100%}
+.nav-search span{color:var(--ink3);font-size:13px}
+.pill{background:var(--ink);color:#fff;font-size:14px;font-weight:500;padding:9px 17px;border-radius:999px}
+.pill:hover{background:#000}
+@media(max-width:1080px){.links{display:none}}
+@media(max-width:640px){.nav-search{display:none}}
+
+/* hero */
+.hero{padding:74px 0 60px;border-bottom:1px solid var(--line)}
+.hero .grid{display:grid;grid-template-columns:1.06fr .94fr;gap:56px;align-items:center}
+.hero h1{margin:16px 0 18px;max-width:19ch}
+.hero .lead{max-width:44ch}
+.chips{display:flex;gap:9px;flex-wrap:wrap;margin-top:26px}
+.chip{border:1px solid #d2d2d7;border-radius:999px;padding:8px 15px;font-size:13.5px;color:var(--ink2);background:#fff;transition:.2s}
+.chip:hover{border-color:var(--ink);color:var(--ink)}
+.mono{font-family:var(--mono);font-size:12.5px;color:var(--ink3);letter-spacing:-.01em}
+.hero .facts{display:flex;gap:26px;flex-wrap:wrap;margin-top:34px;padding-top:22px;border-top:1px solid var(--line)}
+.hero .facts div b{display:block;font-size:24px;font-weight:600;letter-spacing:-.03em}
+.hero .facts div span{font-size:12.5px;color:var(--ink3)}
+.hero .shot{background:var(--soft);border-radius:24px;padding:14px}
+.hero .shot .fr{background:#fff;border-radius:16px;height:320px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero .shot img{max-height:100%;object-fit:contain;transition:transform .5s}
+.hero .shot:hover img{transform:scale(1.03)}
+.hero .specbar{margin-top:12px;padding:0 6px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+@media(max-width:960px){.hero .grid{grid-template-columns:1fr;gap:36px}}
+
+section.pad{padding:76px 0}
+.sec-head{margin-bottom:34px}
+.sec-head h2{margin-top:12px}
+.sec-head p{color:var(--ink2);font-size:16.5px;margin-top:10px;max-width:60ch}
+
+/* finder */
+.finder{background:var(--soft);border-radius:28px;padding:30px 30px 22px}
+.frow{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:18px}
+.fsearch{flex:1;min-width:240px;display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #dcdce1;border-radius:14px;padding:12px 16px}
+.fsearch input{border:0;outline:none;font-size:15.5px;width:100%;background:transparent}
+.fsearch span{color:var(--ink3)}
+.fcount{font-size:13.5px;color:var(--ink3);white-space:nowrap}
+.cats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.cbtn{border:1px solid #dcdce1;background:#fff;border-radius:999px;padding:7px 14px;font-size:13.5px;color:var(--ink2);transition:.2s}
+.cbtn:hover{border-color:var(--ink)}
+.cbtn.on{background:var(--ink);border-color:var(--ink);color:#fff;font-weight:500}
+.cbtn i{font-style:normal;opacity:.55;margin-left:5px;font-size:12.5px}
+.list{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.row{display:grid;grid-template-columns:1.5fr 200px 1fr 92px;gap:14px;align-items:center;padding:13px 18px;border-top:1px solid var(--line);font-size:14.5px}
+.row:first-child{border-top:0}
+.row.head{background:#fafafb;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);padding:11px 18px}
+.row:hover:not(.head){background:#fbfbfd}
+.row b{font-weight:500;letter-spacing:-.005em}
+.row .cm{font-size:13px;color:var(--ink3)}
+.row .sp{font-family:var(--mono);font-size:12px;color:var(--ink3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .go{color:var(--blue);font-size:13.5px;text-align:right;white-space:nowrap}
+.empty{padding:34px;text-align:center;color:var(--ink3);font-size:14.5px}
+.more{padding:13px 18px;border-top:1px solid var(--line);font-size:13.5px;color:var(--ink3);display:flex;justify-content:space-between}
+@media(max-width:880px){.row{grid-template-columns:1fr 90px}.row .cm,.row .sp,.row.head span:nth-child(2),.row.head span:nth-child(3){display:none}}
+@media(max-width:640px){.finder{padding:20px 16px}}
+
+/* category overview */
+.ov{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.ovc{border:1px solid var(--line);border-radius:20px;padding:18px;transition:.25s}
+.ovc:hover{border-color:#c9c9cf;transform:translateY(-3px)}
+.ovc .ph{height:110px;display:flex;align-items:center;justify-content:center;background:var(--soft);border-radius:14px}
+.ovc img{max-height:88%;object-fit:contain;mix-blend-mode:multiply}
+.ovc h3{margin:14px 0 4px;display:flex;justify-content:space-between;align-items:baseline}
+.ovc h3 i{font-style:normal;font-size:12.5px;font-weight:500;color:var(--ink3)}
+.ovc p{font-size:13.5px;color:var(--ink2);line-height:1.55}
+.ovc .std{margin-top:10px}
+@media(max-width:900px){.ov{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.ov{grid-template-columns:1fr}}
+
+/* factory strip */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center}
+.split img{border-radius:22px;width:100%;height:340px;object-fit:cover}
+.certs{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.cert{border:1px solid var(--line);border-radius:10px;padding:9px 14px;font-size:12.5px;font-weight:600;letter-spacing:.03em;color:var(--ink2)}
+@media(max-width:880px){.split{grid-template-columns:1fr;gap:28px}.split img{height:250px}}
+
+/* cases */
+.cases{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.cc img{height:130px;width:100%;object-fit:cover;border-radius:14px}
+.cc .loc{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3);margin:12px 0 4px}
+.cc h3{font-size:15.5px}
+.cc p{font-size:13.5px;color:var(--ink2);margin-top:6px;line-height:1.5}
+@media(max-width:900px){.cases{grid-template-columns:1fr 1fr}}
+
+/* cta */
+.cta{background:#1d1d1f;border-radius:26px;padding:60px 48px;color:#fff;display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:center}
+.cta h2{color:#fff}
+.cta p{color:rgba(255,255,255,.72);font-size:16.5px;margin:14px 0 0;max-width:42ch}
+.cta .r{display:flex;flex-direction:column;gap:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:16px;font-weight:500;padding:14px 26px;border-radius:999px;transition:.25s}
+.btn-blue{background:var(--blue);color:#fff}
+.btn-blue:hover{background:#0077ed}
+.btn-line{border:1px solid rgba(255,255,255,.35);color:#fff}
+.btn-line:hover{background:rgba(255,255,255,.1)}
+@media(max-width:820px){.cta{grid-template-columns:1fr;padding:38px 24px}}
+
+footer.site{border-top:1px solid var(--line);padding:44px 0 38px;font-size:13.5px;color:var(--ink3)}
+footer.site .g{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+
+html.rr .rv{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.3,1)}
+html.rr .rv.in{opacity:1;transform:none}
+.vbadge{position:fixed;right:16px;bottom:16px;z-index:99;background:rgba(29,29,31,.9);color:#fff;font-size:12.5px;padding:9px 15px;border-radius:999px;backdrop-filter:blur(8px)}
+.vbadge a{color:#5ac8fa}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="nav">
+    <a class="brand" href="#"><span class="mk">F</span>FMUSER</a>
+    <nav class="links"><a href="#">Products</a><a href="#">Solutions</a><a href="#">Factory</a><a href="#">Support</a><a href="#">Contact</a></nav>
+    <label class="nav-search"><span>⌕</span><input id="navQ" type="search" placeholder="Search 191 models"></label>
+    <a class="pill" href="#">Get a quote</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap grid">
+    <div>
+      <p class="kicker">Digital TV headend equipment · Factory direct</p>
+      <h1>Match a headend unit to your channel plan.</h1>
+      <p class="lead">191 models across nine categories, each one specified for a channel count, an input type and a modulation standard. Tell us the plan — or search the catalogue yourself.</p>
+      <div class="chips">
+        <button class="chip" data-jump="encoder">Encoding</button>
+        <button class="chip" data-jump="modulator">Modulation</button>
+        <button class="chip" data-jump="ip-gateway">IP distribution</button>
+        <button class="chip" data-jump="transmitter">Transmission</button>
+        <button class="chip" data-jump="ird-decoder">Satellite reception</button>
+      </div>
+      <div class="facts">
+        <div><b data-count="191">191</b><span>Models in catalogue</span></div>
+        <div><b data-count="9">9</b><span>Categories</span></div>
+        <div><b data-count="50" data-suffix="+">50+</b><span>Export markets</span></div>
+        <div><b data-count="24" data-suffix="h">24h</b><span>Burn-in per unit</span></div>
+      </div>
+    </div>
+    <div class="shot">
+      <div class="fr"><img id="heroImg" src="../img/cat-encoder.jpg" alt="Headend unit"></div>
+      <div class="specbar">
+        <span class="mono">HEVC / H.265</span><span class="mono">UDP · RTP · RTSP</span><span class="mono">19" 1U</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODEL FINDER -->
+<section class="pad" id="finder">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <p class="kicker">Model finder</p>
+      <h2>Search the catalogue.</h2>
+      <p>Type a model prefix or a keyword — <span class="mono">FUQ4339</span>, <span class="mono">8 HDMI</span>, <span class="mono">QAM</span> — then narrow by category.</p>
+    </div>
+    <div class="finder rv">
+      <div class="frow">
+        <label class="fsearch"><span>⌕</span><input id="q" type="search" placeholder="Search 191 models by name, type or spec…"></label>
+        <span class="fcount" id="count">Showing 191 of 191</span>
+      </div>
+      <div class="cats" id="cats"></div>
+      <div class="list">
+        <div class="row head"><span>Model</span><span>Category</span><span>Key specification</span><span></span></div>
+        <div id="rows"></div>
+      </div>
+      <div class="more" id="more" style="display:none"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORY OVERVIEW -->
+<section class="pad" style="background:var(--soft)">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <p class="kicker">Range overview</p>
+      <h2>What each category covers.</h2>
+    </div>
+    <div class="ov">
+      <a class="ovc rv" href="#" data-jump="encoder"><div class="ph"><img src="../img/cat-encoder.jpg" alt=""></div><h3>Encoders <i>28 models</i></h3><p>HD/SD encoding from single-channel to 48× HDMI: H.264, H.265/HEVC, MPEG-2 and audio.</p><p class="std mono">HDMI · SDI · YPbPr · CVBS → IP</p></a>
+      <a class="ovc rv" href="#" data-jump="modulator"><div class="ph"><img src="../img/cat-modulator.jpg" alt=""></div><h3>Modulators <i>45 models</i></h3><p>QAM, ATSC, DVB-T, ISDB-T, DVB-S2 and IP modulation from 1 to 64 channels.</p><p class="std mono">QAM · ATSC · DVB-T · ISDB-T</p></a>
+      <a class="ovc rv" href="#" data-jump="encoder-modulator"><div class="ph"><img src="../img/cat-encmod.jpg" alt=""></div><h3>Encoder modulators <i>26 models</i></h3><p>All-in-one units that encode and modulate in a single rack box — fewer parts in the chain.</p><p class="std mono">HDMI/SDI in → RF out</p></a>
+      <a class="ovc rv" href="#" data-jump="ip-gateway"><div class="ph"><img src="../img/cat-ipgw.jpg" alt=""></div><h3>IP gateways <i>20 models</i></h3><p>IPTV gateway servers, streamers and IP output for hotels, hospitals, campuses and ISPs.</p><p class="std mono">IP → IPTV · VOD · EPG</p></a>
+      <a class="ovc rv" href="#" data-jump="ird-decoder"><div class="ph"><img src="../img/cat-ird.jpg" alt=""></div><h3>IRD &amp; decoders <i>21 models</i></h3><p>IRD receivers, decoders and transcoders for DVB-S/S2/S2X, ASI and SDI workflows.</p><p class="std mono">DVB-S2 · ASI · SDI</p></a>
+      <a class="ovc rv" href="#" data-jump="multiplexer"><div class="ph"><img src="../img/cat-mux.jpg" alt=""></div><h3>Multiplexers <i>16 models</i></h3><p>Multiplexers, scramblers and de-multiplexers for transport-stream management and CA.</p><p class="std mono">SPTS · MPTS · PSI/SI</p></a>
+      <a class="ovc rv" href="#" data-jump="transmitter"><div class="ph"><img src="../img/cat-tx.jpg" alt=""></div><h3>Transmitters <i>10 models</i></h3><p>FM and DVB-T transmitters from 200 W to 3 kW with antennas and studio links.</p><p class="std mono">FM · DVB-T · 200 W–3 kW</p></a>
+      <a class="ovc rv" href="#" data-jump="other"><div class="ph"><img src="../img/cat-other.jpg" alt=""></div><h3>Other devices <i>21 models</i></h3><p>Headend processors, analyzers, capture cards and accessories that complete a rack.</p><p class="std mono">Processors · analyzers</p></a>
+      <a class="ovc rv" href="#" data-jump="software"><div class="ph"><img src="../img/cat-software.jpg" alt=""></div><h3>Software &amp; systems <i>4 models</i></h3><p>EPG servers and headend management systems that sit on top of the hardware.</p><p class="std mono">EPG · management</p></a>
+    </div>
+  </div>
+</section>
+
+<!-- FACTORY -->
+<section class="pad">
+  <div class="wrap split">
+    <div class="rv">
+      <p class="kicker">The factory</p>
+      <h2 style="margin:12px 0 16px">Built and measured, not rebadged.</h2>
+      <p class="lead">SMT assembly, firmware, RF alignment and a 24-hour burn-in run happen on one site in Guangzhou. Every unit ships with its own test record.</p>
+      <div class="certs">
+        <span class="cert">ISO 9001:2015</span><span class="cert">CE</span><span class="cert">RoHS</span><span class="cert">FCC</span><span class="cert">12-MONTH WARRANTY</span>
+      </div>
+    </div>
+    <img class="rv" src="../img/qa.jpg" alt="Quality control bench">
+  </div>
+</section>
+
+<!-- CASES -->
+<section class="pad" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head rv"><p class="kicker">Deployments</p><h2>Recent installations.</h2></div>
+    <div class="cases">
+      <div class="cc rv"><img src="../img/case-hotel.jpg" alt=""><p class="loc">Bali, Indonesia</p><h3>200-room hotel IPTV</h3><p>Two gateway servers, 200 STBs, VOD — on air in five days.</p></div>
+      <div class="cc rv"><img src="../img/case-radio.jpg" alt=""><p class="loc">Lagos, Nigeria</p><h3>Community FM station</h3><p>1 kW transmitter, 4-bay antenna, studio link.</p></div>
+      <div class="cc rv"><img src="../img/case-university.jpg" alt=""><p class="loc">Guadalajara, Mexico</p><h3>Campus DVB-C headend</h3><p>32-channel QAM headend, 8,000 students.</p></div>
+      <div class="cc rv"><img src="../img/case-isp.jpg" alt=""><p class="loc">Riyadh, Saudi Arabia</p><h3>ISP IP distribution</h3><p>IPTV gateway, 1,000+ IP subscribers, 16 tuners.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="pad" style="padding-top:0;padding-bottom:86px">
+  <div class="wrap">
+    <div class="cta rv">
+      <div>
+        <h2>Send the channel plan.</h2>
+        <p>Channels, inputs, target standard and quantity — we come back with a system diagram, a bill of materials and pricing.</p>
+      </div>
+      <div class="r">
+        <a class="btn btn-blue" href="#">Request a quotation</a>
+        <a class="btn btn-line" href="#">Book a technical call</a>
+        <span class="mono" style="color:rgba(255,255,255,.55);text-align:center">sales@yourbrand.com · Mon–Sat 9:00–18:00 GMT+8</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap g">
+    <span>© 2026 Your company name — digital TV headend equipment, Guangzhou, China.</span>
+    <span>Products · Factory · Guides · Privacy · Terms</span>
+  </div>
+</footer>
+
+<div class="vbadge">Direction C · Console — <a href="../">back to all three</a></div>
+
+<script>
+// ---------- data ----------
+var MODELS = [];
+var CATS = [
+  ['modulator','Modulators',45],['encoder','Encoders',28],['encoder-modulator','Encoder modulators',26],
+  ['other','Other devices',21],['ird-decoder','IRD & decoders',21],['ip-gateway','IP gateways',20],
+  ['multiplexer','Multiplexers',16],['transmitter','Transmitters',10],['software','Software & systems',4]
+];
+var NAME={}; CATS.forEach(function(c){NAME[c[0]]=c[1];});
+var active='all', shown=12;
+
+function render(){
+  var q=document.getElementById('q').value.trim().toLowerCase();
+  var out=MODELS.filter(function(m){
+    if(active!=='all' && m.c!==active) return false;
+    if(!q) return true;
+    return (m.n+' '+m.c+' '+m.s).toLowerCase().indexOf(q)>-1;
+  });
+  document.getElementById('count').textContent='Showing '+out.length+' of '+MODELS.length;
+  var box=document.getElementById('rows');
+  box.innerHTML = out.length ? out.slice(0,shown).map(function(m){
+    return '<a class="row" href="#"><b>'+m.n+'</b><span class="cm">'+(NAME[m.c]||m.c)+'</span><span class="sp">'+(m.s||'—')+'</span><span class="go">Specs →</span></a>';
+  }).join('') : '<div class="empty">No model matches that search.</div>';
+  var more=document.getElementById('more');
+  if(out.length>shown){ more.style.display='flex'; more.innerHTML='<span>Showing first '+shown+' of '+out.length+'</span><a href="#" class="go" id="showAll" style="color:var(--blue)">Show all →</a>';
+    document.getElementById('showAll').addEventListener('click',function(e){e.preventDefault();shown=out.length;render();});
+  } else { more.style.display='none'; }
+}
+// category chips
+var cbox=document.getElementById('cats');
+cbox.innerHTML='<button class="cbtn on" data-c="all">All <i>191</i></button>'+CATS.map(function(c){
+  return '<button class="cbtn" data-c="'+c[0]+'">'+c[1]+' <i>'+c[2]+'</i></button>';}).join('');
+cbox.addEventListener('click',function(e){ var b=e.target.closest('.cbtn'); if(!b)return;
+  cbox.querySelectorAll('.cbtn').forEach(function(x){x.classList.remove('on');});
+  b.classList.add('on'); active=b.getAttribute('data-c'); shown=12; render();
+});
+document.getElementById('q').addEventListener('input',function(){shown=12;render();});
+document.getElementById('navQ').addEventListener('input',function(e){
+  document.getElementById('q').value=e.target.value; shown=12; render();
+});
+// jump chips
+document.querySelectorAll('[data-jump]').forEach(function(el){
+  el.addEventListener('click',function(e){ if(el.tagName==='A')e.preventDefault();
+    var c=el.getAttribute('data-jump'); active=c; shown=12;
+    cbox.querySelectorAll('.cbtn').forEach(function(x){x.classList.toggle('on', x.getAttribute('data-c')===c);});
+    document.getElementById('q').value=''; render();
+    document.getElementById('finder').scrollIntoView({behavior:'smooth'});
+  });
+});
+
+// ---------- load 191 real models ----------
+fetch('./models.json').then(function(r){return r.json();}).then(function(d){
+  MODELS=d; render();
+}).catch(function(){
+  MODELS=[{n:'FUQ4339KN V2 Network Encoder 48 HDMI',c:'encoder',s:'Resolution: up to 1080p30'},
+          {n:'FUQ4339RN IP Streaming Encoder 24 HDMI',c:'encoder',s:'8/16/24 HDMI inputs'},
+          {n:'FUQ4654E Encoder Modulator Multi-input',c:'encoder-modulator',s:'HEVC/H.265; H.264'}];
+  document.getElementById('count').textContent='offline sample — 3 of 191';
+  render();
+});
+
+// ---------- reveal + count-up ----------
+if(window.IntersectionObserver){
+  document.documentElement.classList.add('rr');
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.06});
+  document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
+  document.querySelectorAll('[data-count]').forEach(function(el){
+    var t=+el.getAttribute('data-count'), sfx=el.getAttribute('data-suffix')||'', done=false;
+    new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting&&!done){done=true;
+      var t0=performance.now();
+      (function tick(n){var p=Math.min(1,(n-t0)/900),e2=1-Math.pow(1-p,3);
+        el.textContent=Math.round(t*e2)+sfx; if(p<1)requestAnimationFrame(tick);})(t0);
+    }});},{threshold:.4}).observe(el);
+  });
+}
+</script>
+</body>
+</html>
