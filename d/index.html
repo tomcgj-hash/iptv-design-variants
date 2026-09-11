@@ -83,6 +83,31 @@ section.pad.sm{padding:74px 0}
 .row2.flip .txt{order:2}
 @media(max-width:900px){.row2{grid-template-columns:1fr;gap:32px}.row2.flip .txt{order:0}.row2 .shot{height:260px}}
 
+/* chapter 3 — full-width figure with overlaid spec strip */
+.widefig{position:relative;margin:0;background:var(--soft);border-radius:34px;padding:40px 24px 122px;overflow:hidden}
+.widefig img{max-height:388px;margin:0 auto;object-fit:contain;transition:transform .5s cubic-bezier(.2,.7,.3,1)}
+.widefig:hover img{transform:scale(1.02)}
+.specstrip{position:absolute;left:26px;right:26px;bottom:22px;display:grid;grid-template-columns:repeat(4,1fr) auto;gap:12px 26px;align-items:center;
+  background:rgba(255,255,255,.78);-webkit-backdrop-filter:blur(18px) saturate(180%);backdrop-filter:blur(18px) saturate(180%);
+  border:1px solid rgba(255,255,255,.92);border-radius:18px;padding:16px 24px;box-shadow:0 12px 34px rgba(0,0,0,.07)}
+.specstrip .si{min-width:0}
+.specstrip .si b{display:block;font-size:14.5px;font-weight:600;letter-spacing:-.01em}
+.specstrip .si i{font-style:normal;font-size:12.5px;color:var(--ink3);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.specstrip .sgo{color:var(--blue);font-size:15px;font-weight:500;white-space:nowrap;justify-self:end}
+@media(max-width:1100px){
+  /* below this width the strip becomes an in-flow bar under the image — no overlap possible */
+  .widefig{padding:32px 20px 28px}
+  .widefig img{max-height:320px}
+  .specstrip{position:static;left:0;right:0;bottom:auto;margin:26px 0 0;grid-template-columns:repeat(2,1fr);gap:14px 22px}
+  .specstrip .sgo{grid-column:1/-1;justify-self:start}
+  .specstrip .si i{white-space:normal;overflow:visible;text-overflow:clip}
+}
+@media(max-width:880px){
+  .widefig{padding:26px 16px 26px;border-radius:24px}
+  .widefig img{max-height:250px}
+  .specstrip{margin:22px 0 0;gap:14px 20px;padding:16px 18px}
+}
+
 /* ---------- MODEL FINDER (from direction C) ---------- */
 .finder-sec{background:var(--soft);border-radius:40px;margin:0 12px;padding:82px 0 88px}
 .finder{max-width:1180px;margin:34px auto 0;padding:0 24px}
@@ -212,15 +237,27 @@ html.rr .rv.in{opacity:1;transform:none}
         <a class="lnk" href="#">See modulators →</a>
       </div>
     </div>
-    <div class="row2 rv">
-      <div class="shot"><img src="../img/cat-ipgw.jpg" alt="IP gateway"></div>
-      <div class="txt">
-        <p class="kicker">Distribution</p>
-        <h2>Satellite in, IP out, to every screen.</h2>
-        <p class="lead">IPTV gateway servers for hotels, hospitals, campuses and ISPs — with VOD, multi-language EPG and remote management.</p>
-        <a class="lnk" href="#">See IP gateways →</a>
-      </div>
-    </div>
+  </div>
+</section>
+
+<!-- CHAPTER 3 — full-width device image with an overlaid specification strip -->
+<section class="pad" style="padding-top:0">
+  <div class="wrap center rv" style="margin-bottom:36px">
+    <p class="kicker">Distribution</p>
+    <h2 style="margin:16px auto 14px;max-width:20ch">Satellite in, IP out, to every screen.</h2>
+    <p class="lead" style="max-width:50ch;margin:0 auto">IPTV gateway servers for hotels, hospitals, campuses and ISPs — with VOD, multi-language EPG and remote management.</p>
+  </div>
+  <div class="wide rv">
+    <figure class="widefig">
+      <img src="../img/cat-ipgw.jpg" alt="IPTV gateway server">
+      <figcaption class="specstrip">
+        <span class="si"><b>IP output</b><i>UDP · RTP · multicast</i></span>
+        <span class="si"><b>VOD library</b><i>on-demand content</i></span>
+        <span class="si"><b>EPG</b><i>multi-language</i></span>
+        <span class="si"><b>Control</b><i>remote web management</i></span>
+        <a class="sgo" href="#">See IP gateways →</a>
+      </figcaption>
+    </figure>
   </div>
 </section>
 
